@@ -13,7 +13,7 @@ function convertToClassName(name: string, prefix: string) {
       if (c.includes(":")) {
         // get last part of class name
         let lastPart = c.split(":").pop();
-        if (lastPart) {
+        if (lastPart && !lastPart.startsWith(prefix)) {
           return c.replace(lastPart, prefix + lastPart);
         }
       }
