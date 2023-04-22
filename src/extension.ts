@@ -2,7 +2,35 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
 
-function changePrefixFromString({ prefix = "tw-" }: { prefix?: string }) {
+function convertToClassName(name: string, prefix: string) {
+  let result = name
+    .split(" ")
+    .map((c: string) => {
+      if (c.startsWith(prefix)) {
+        return c;
+      }
+
+      if (c.includes(":")) {
+        // get last part of class name
+        let lastPart = c.split(":").pop();
+        if (lastPart) {
+          return c.replace(lastPart, prefix + lastPart);
+        }
+      }
+      return prefix + c;
+    })
+    .join(" ");
+
+  return result;
+}
+
+function changePrefix({
+  prefix = "tw-",
+  type = 0,
+}: {
+  prefix?: string;
+  type?: number;
+}) {
   let editor = vscode.window.activeTextEditor;
   if (!editor) {
     return;
@@ -11,40 +39,30 @@ function changePrefixFromString({ prefix = "tw-" }: { prefix?: string }) {
   let document = editor.document;
   let selection = editor.selection;
   let text = document.getText(selection);
-  let newText = text
-    .split(" ")
-    .map((c: string) => (c.startsWith(prefix) ? c : prefix + c))
-    .join(" ");
+
+  let className = text.match(/(?<=class(?:Name)?=")(.*?)(?=")/g);
+  let newText = "";
+  switch (type) {
+    case 0: // from string
+      newText = convertToClassName(text, prefix);
+      break;
+    case 1: // from html
+      if (!className) {
+        return;
+      }
+      className.forEach((s: string) => {
+        let newClass = convertToClassName(s, prefix);
+        // replace old class name with new class name
+        text = text.replace(s, newClass);
+      });
+      newText = text;
+      break;
+    default:
+      newText = text;
+  }
 
   editor.edit((builder: vscode.TextEditorEdit) => {
     builder.replace(selection, newText);
-  });
-}
-
-function changePrefixFromHtml({ prefix = "tw-" }: { prefix?: string }) {
-  let editor = vscode.window.activeTextEditor;
-  if (!editor) {
-    return;
-  }
-
-  let document = editor.document;
-  let selection = editor.selection;
-  let text = document.getText(selection);
-  let className = text.match(/(?<=class(?:Name)?=")(.*?)(?=")/g);
-  if (!className) {
-    return;
-  }
-  className.forEach((s: string) => {
-    let newClass = s
-      .split(" ")
-      .map((c: string) => (c.startsWith(prefix) ? c : prefix + c))
-      .join(" ");
-    // replace old class name with new class name
-    text = text.replace(s, newClass);
-  });
-
-  editor.edit((builder: vscode.TextEditorEdit) => {
-    builder.replace(selection, text);
   });
 }
 
@@ -64,7 +82,7 @@ export function activate(context: vscode.ExtensionContext) {
       vscode.window
         .showInputBox({ prompt: `Enter new prefix for:` })
         .then((prefix: string | undefined) => {
-          changePrefixFromString({ prefix });
+          changePrefix({ prefix, type: 0 });
         });
     }
   );
@@ -75,7 +93,7 @@ export function activate(context: vscode.ExtensionContext) {
       vscode.window
         .showInputBox({ prompt: `Enter new prefix for:` })
         .then((prefix: string | undefined) => {
-          changePrefixFromHtml({ prefix });
+          changePrefix({ prefix, type: 1 });
         });
     }
   );
