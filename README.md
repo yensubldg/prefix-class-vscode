@@ -4,21 +4,11 @@ This is a VSCode extension that allows you to add a prefix to all class names in
 
 ## Features
 
-- Adds a prefix to all class names in your HTML or JSX files
-- Supports customization of the prefix
-- Can be applied to a single file or the entire workspace
+- Adds a prefix to all class names in your HTML or JSX files.
 
 ## Installation
 
 You can install this extension from the [Visual Studio Code Marketplace](https://marketplace.visualstudio.com/items?itemName=Yensubldg.prefixclass).
-
-Alternatively, you can install it by following these steps:
-
-1. Clone the repository to your local machine.
-2. Open VSCode and navigate to the extensions tab.
-3. Click the "..." icon to open the context menu.
-4. Select "Install from VSIX" and navigate to the location where you cloned the repository.
-5. Select the `.vsix` file and click "Install".
 
 ## Usage
 
@@ -32,9 +22,7 @@ To use this extension, follow these steps:
 6. Input prefix will be added to all class names in the selected text.  
 7. Press "Enter" to apply the prefix.
 
-## Customization
-
-Coming soon...
+![Usage](images/usage.gif)
 
 ## Contribution
 
