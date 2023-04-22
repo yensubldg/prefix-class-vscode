@@ -1,8 +1,17 @@
 {
   "name": "prefixclass",
-  "displayName": "PrefixClass",
+  "displayName": "Prefix Class",
   "description": "This is a VSCode extension that allows you to add a prefix to all class names in your HTML or JSX files.",
-  "version": "0.0.1",
+  "author": {
+    "name": "yensubldg",
+    "email": "windev.thang@gmail.com"
+  },
+  "version": "1.0.0",
+  "icon": "images/icon.png",
+  "galleryBanner": {
+    "color": "#C80000",
+    "theme": "dark"
+  },
   "engines": {
     "vscode": "^1.77.0"
   },
@@ -44,8 +53,15 @@
     "mocha": "^10.2.0",
     "typescript": "^4.9.5"
   },
+  "bugs": {
+    "url": "https://github.com/yensubldg/prefix-class-vscode/issues",
+    "email": "windev.thang@gmail.com"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yensubldg/prefix-class-vscode"
-  }
+    "url": "https://github.com/yensubldg/prefix-class-vscode.git"
+  },
+  "homepage": "https://github.com/yensubldg/prefix-class-vscode/blob/main/README.md",
+  "publisher": "yensubldg",
+  "license": "MIT"
 }
