@@ -10,7 +10,7 @@ This is a VSCode extension that allows you to add a prefix to all class names in
 
 ## Installation
 
-You can install this extension from the [Visual Studio Code Marketplace](https://marketplace.visualstudio.com/items?itemName=your-extension-name).
+You can install this extension from the [Visual Studio Code Marketplace](https://marketplace.visualstudio.com/items?itemName=Yensubldg.prefixclass).
 
 Alternatively, you can install it by following these steps:
 
