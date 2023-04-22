@@ -6,12 +6,8 @@
     "name": "yensubldg",
     "email": "windev.thang@gmail.com"
   },
-  "version": "1.0.0",
+  "version": "1.0.1",
   "icon": "images/icon.png",
-  "galleryBanner": {
-    "color": "#C80000",
-    "theme": "dark"
-  },
   "engines": {
     "vscode": "^1.77.0"
   },
