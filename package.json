@@ -6,7 +6,7 @@
     "name": "yensubldg",
     "email": "windev.thang@gmail.com"
   },
-  "version": "1.0.2",
+  "version": "1.0.3",
   "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.77.0"
