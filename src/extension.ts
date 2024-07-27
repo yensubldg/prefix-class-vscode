@@ -2,9 +2,11 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
 
-function convertToClassName(name: string, prefix: string) {
-  let result = name
-    .split(" ")
+function convertToClassName(classes: string, prefix: string) {
+  let count: number = 0;
+  const classList: string[] = classes.split(" ");
+
+  const convertedText = classList
     .map((c: string) => {
       if (c.startsWith(prefix)) {
         return c;
@@ -13,15 +15,25 @@ function convertToClassName(name: string, prefix: string) {
       if (c.includes(":")) {
         // get last part of class name
         let lastPart = c.split(":").pop();
-        if (lastPart && !lastPart.startsWith(prefix)) {
-          return c.replace(lastPart, prefix + lastPart);
+
+        if (lastPart) {
+          if (!lastPart.startsWith(prefix)) {
+            count++;
+            return c.replace(lastPart, prefix + lastPart);
+          }
+          return c;
         }
+      } else {
+        count++;
+        return prefix + c;
       }
-      return prefix + c;
     })
     .join(" ");
 
-  return result;
+  return {
+    count,
+    convertedText,
+  };
 }
 
 function changePrefix({
@@ -42,17 +54,19 @@ function changePrefix({
 
   let className = text.match(/(?<=class(?:Name)?=")(.*?)(?=")/g);
   let newText = "";
+  let count = 0;
   switch (type) {
     case 0: // from string
-      newText = convertToClassName(text, prefix);
+      newText = convertToClassName(text, prefix).convertedText;
+      count = convertToClassName(text, prefix).count;
       break;
     case 1: // from html
       if (!className) {
         return;
       }
       className.forEach((s: string) => {
-        let newClass = convertToClassName(s, prefix);
-        // replace old class name with new class name
+        let newClass = convertToClassName(s, prefix).convertedText;
+        count += convertToClassName(s, prefix).count;
         text = text.replace(s, newClass);
       });
       newText = text;
@@ -63,6 +77,10 @@ function changePrefix({
 
   editor.edit((builder: vscode.TextEditorEdit) => {
     builder.replace(selection, newText);
+
+    vscode.window.showInformationMessage(
+      `Prefix ${prefix} added to ${count} class names`
+    );
   });
 }
 
