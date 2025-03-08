@@ -124,9 +124,8 @@ function changePrefix({
   let newText = "";
   let count = 0;
 
-  if (!prefix) {
-    prefix = config.defaultPrefix;
-  }
+  // Ensure prefix is not undefined
+  const actualPrefix = prefix || config.defaultPrefix;
 
   // Create a status bar item
   const statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
@@ -139,11 +138,11 @@ function changePrefix({
     switch (type) {
       case 0: // from string
         if (operation === "add") {
-          const result = convertToClassName(text, prefix);
+          const result = convertToClassName(text, actualPrefix);
           newText = result.convertedText;
           count = result.count;
         } else {
-          const result = removePrefix(text, prefix);
+          const result = removePrefix(text, actualPrefix);
           newText = result.convertedText;
           count = result.count;
         }
@@ -156,11 +155,11 @@ function changePrefix({
         
         className.forEach((s: string) => {
           if (operation === "add") {
-            let result = convertToClassName(s, prefix);
+            let result = convertToClassName(s, actualPrefix);
             count += result.count;
             text = text.replace(s, result.convertedText);
           } else {
-            let result = removePrefix(s, prefix);
+            let result = removePrefix(s, actualPrefix);
             count += result.count;
             text = text.replace(s, result.convertedText);
           }
@@ -186,7 +185,7 @@ function changePrefix({
     }).then(success => {
       if (success) {
         const action = operation === "add" ? "added to" : "removed from";
-        const message = `${prefix} ${action} ${count} class names`;
+        const message = `${actualPrefix} ${action} ${count} class names`;
         
         if (config.enableStatusBarInfo) {
           statusBarItem.text = `$(check) ${message}`;

@@ -1,12 +1,12 @@
 {
   "name": "prefixclass",
   "displayName": "Prefix Class",
-  "description": "This is a VSCode extension that allows you to add a prefix to all class names in your HTML or JSX files.",
+  "description": "This is a VSCode extension that allows you to add or remove prefixes to class names in your HTML or JSX files.",
   "author": {
     "name": "yensubldg",
     "email": "windev.thang@gmail.com"
   },
-  "version": "1.0.3",
+  "version": "1.1.0",
   "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.77.0"
