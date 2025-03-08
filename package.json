@@ -25,8 +25,36 @@
       {
         "command": "prefixclass.changePrefixFromHtml",
         "title": "Prefix Class: Change prefix from html"
+      },
+      {
+        "command": "prefixclass.removePrefixFromString",
+        "title": "Prefix Class: Remove prefix from string"
+      },
+      {
+        "command": "prefixclass.removePrefixFromHtml",
+        "title": "Prefix Class: Remove prefix from html"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Prefix Class",
+      "properties": {
+        "prefixclass.defaultPrefix": {
+          "type": "string",
+          "default": "tw-",
+          "description": "Default prefix to use when adding to class names"
+        },
+        "prefixclass.enableStatusBarInfo": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show information about the prefix operation in the status bar"
+        },
+        "prefixclass.fileExtensions": {
+          "type": "array",
+          "default": [".html", ".jsx", ".tsx"],
+          "description": "File extensions where the extension will be available"
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
